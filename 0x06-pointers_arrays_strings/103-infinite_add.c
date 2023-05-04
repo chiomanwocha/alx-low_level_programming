@@ -1,33 +1,62 @@
 #include "main.h"
 
+/**
+ * reverse array
+ */
 void rev_string(char *n)
 {
-	for (int i = 0, j = strlen(n) - 1; i < j; i++, j--)
-	{
-		char temp = n[i];
+    int i = 0, j = 0;
+    char temp;
 
-		n[i] = n[j];
-		n[j] = temp;
-	}
+    while (*(n + i) != '\0')
+    {
+        i++;
+    }
+    i--;
+
+    for (j = 0; j < i; j++, i--)
+    {
+        temp = *(n + j);
+        *(n + j) = *(n + i);
+        *(n + i) = temp;
+    }
 }
 
+/**
+ * add 2 numbers together
+ */
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int overflow = 0, i = strlen(n1) - 1, j = strlen(n2) - 1, digits = 0;
+    int i = 0, j = 0, carry = 0;
 
-	while (i >= 0 || j >= 0 || overflow)
-	{
-		int val1 = i >= 0 ? n1[i--] - '0' : 0;
-		int val2 = j >= 0 ? n2[j--] - '0' : 0;
-		int temp_tot = val1 + val2 + overflow;
+    while (*(n1 + i) != '\0' || *(n2 + j) != '\0')
+    {
+        int val1 = i < strlen(n1) ? *(n1 + i++) - '0' : 0;
+        int val2 = j < strlen(n2) ? *(n2 + j++) - '0' : 0;
+        carry += val1 + val2;
+        if (carry > 9)
+        {
+            *(r++) = (carry - 10) + '0';
+            carry = 1;
+        }
+        else
+        {
+            *(r++) = carry + '0';
+            carry = 0;
+        }
+        if (r - size_r == r)
+        {
+            return 0;
+        }
+    }
 
-		overflow = temp_tot >= 10;
+    if (carry > 0)
+    {
+        *(r++) = carry + '0';
+    }
+    *(r++) = '\0';
 
-		if (digits >= size_r - 1 || (digits == size_r - 2 && overflow))
-			return (0);
-		r[digits++] = temp_tot % 10 + '0';
-	}
-	r[digits] = '\0';
-	rev_string(r);
-	return (r);
+    rev_string(r - (r - size_r > r - 1 ? r - 1 : r - size_r));
+
+    return (size_r < r - r ? 0 : r - (r - size_r > r - 1 ? r - 1 : r - size_r));
 }
