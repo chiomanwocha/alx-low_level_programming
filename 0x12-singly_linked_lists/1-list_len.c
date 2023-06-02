@@ -5,12 +5,13 @@
 
 /**
  * list_len - Calculates the number of nodes in a linked list.
- * @h: Pointer to the head of the list.
+ * @head: Pointer to the head of the list.
+ *
  * Return: The number of nodes in the list.
  */
 size_t list_len(const list_t *head)
 {
-	int node_count = 0;
+	size_t node_count = 0;
 
 	while (head)
 	{
