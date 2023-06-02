@@ -4,13 +4,9 @@
 #include "lists.h"
 
 /**
- * main - Entry point of the program
+ * main - check the code
  *
- * Return: Always 0
- *
- * Description: This function demonstrates the usage of the linked list functions.
- * It creates a linked list, adds a new node at the beginning, prints the list,
- * frees the memory, and prints the list again.
+ * Return: Always 0.
  */
 int main(void)
 {
@@ -26,24 +22,19 @@ int main(void)
         printf("Error\n");
         return (1);
     }
-
     new->str = strdup("Hello");
     new->len = 5;
     new->next = head;
     head = new;
-
     n = print_list(head);
     printf("-> %lu elements\n", n);
 
     printf("\n");
-
     free(new->str);
     new->str = NULL;
-
     n = print_list(head);
     printf("-> %lu elements\n", n);
 
     free(new);
     return (0);
 }
-
