@@ -1,29 +1,32 @@
-#include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
 #include "lists.h"
 
 /**
- * custom_print_list - Prints the elements of a linked list.
- * @head: Pointer to the head of the list.
+ * print_list - Prints all the elements of a linked list.
+ * @h: Pointer to the list_t list to print.
+ *
  * Return: The number of nodes in the list.
+ *
+ * Description: This function traverses the linked list starting from
+ * the given node and prints the string and length of each node.
+ * If the string is NULL, it prints (nil) instead.
+ * It returns the number of nodes in the list.
  */
-size_t custom_print_list(const list_t *head)
+size_t print_list(const list_t *h)
 {
-	int count = 0;
+    size_t s = 0;
 
-	while (head)
-	{
-		if (head->string == NULL)
-		{
-			printf("[0] (nil)\n");
-		}
-		else
-		{
-			printf("[%d] %s\n", head->length, head->string);
-		}
-		count++;
-		head = head->next;
-	}
-	return (count);
+    while (h)
+    {
+        if (!h->str)
+            printf("[0] (nil)\n");
+        else
+            printf("[%u] %s\n", h->len, h->str);
+
+        h = h->next;
+        s++;
+    }
+
+    return (s);
 }
+

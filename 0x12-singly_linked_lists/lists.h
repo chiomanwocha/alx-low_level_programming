@@ -1,17 +1,29 @@
 #ifndef LISTS_H
 #define LISTS_H
 
+#include <stddef.h>
+
+/**
+ * struct list_s - Structure for a singly linked list node.
+ * @str: String - dynamically allocated string.
+ * @len: Length of the string.
+ * @next: Pointer to the next node.
+ *
+ * Description: Defines a node structure for a singly linked list.
+ */
 typedef struct list_s
 {
-	char *string;
-	unsigned int length;
-	struct list_s *next;
+    char *str;
+    unsigned int len;
+    struct list_s *next;
 } list_t;
 
-size_t print_custom_list(const list_t *head);
-size_t get_custom_list_length(const list_t *head);
-list_t *add_custom_node(list_t **head, const char *str);
-list_t *add_custom_node_end(list_t **head, const char *str);
-void free_custom_list(list_t *head);
+/* Function prototypes */
+size_t print_list(const list_t *h);
+size_t list_len(const list_t *h);
+list_t *add_node(list_t **head, const char *str);
+list_t *add_node_end(list_t **head, const char *str);
+void free_list(list_t *head);
 
 #endif
+

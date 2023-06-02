@@ -3,12 +3,14 @@
 #include <stdio.h>
 #include "lists.h"
 
-size_t custom_print_list(const list_t *head); /* Function declaration */
-
 /**
  * main - Entry point of the program
  *
- * Return: Always 0.
+ * Return: Always 0
+ *
+ * Description: This function demonstrates the usage of the linked list functions.
+ * It creates a linked list, adds a new node at the beginning, prints the list,
+ * frees the memory, and prints the list again.
  */
 int main(void)
 {
@@ -24,17 +26,21 @@ int main(void)
         printf("Error\n");
         return (1);
     }
-    new->string = strdup("Hello");
-    new->length = 5;
+
+    new->str = strdup("Hello");
+    new->len = 5;
     new->next = head;
     head = new;
-    n = custom_print_list(head);
+
+    n = print_list(head);
     printf("-> %lu elements\n", n);
 
     printf("\n");
-    free(new->string);
-    new->string = NULL;
-    n = custom_print_list(head);
+
+    free(new->str);
+    new->str = NULL;
+
+    n = print_list(head);
     printf("-> %lu elements\n", n);
 
     free(new);
