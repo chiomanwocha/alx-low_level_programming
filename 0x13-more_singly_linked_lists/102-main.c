@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include "lists.h"
 
+/* Function prototype */
+size_t free_listint_safe(listint_t **h);
+
 /**
  * main - check the code
  *
@@ -39,3 +42,4 @@ int main(void)
     printf("%p, %p\n", (void *)head2, (void *)head);
     return (0);
 }
+
