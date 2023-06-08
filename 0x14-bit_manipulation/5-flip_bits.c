@@ -11,18 +11,21 @@
 unsigned int flip_bits(unsigned long int n, unsigned long int m)
 {
 	unsigned long int difference, result;
-	unsigned int count;
+	unsigned int count, i;
 
-	difference = n ^ m;
-	count = 0;
+	difference = n ^ m;  /* XOR the two numbers to get the differing bits */
+	count = 0;  /* Initialize the count of differing bits to 0 */
 
-	while (difference > 0)
+	/* Iterate through each bit of the difference */
+	for (i = 0; i < (sizeof(unsigned long int) * 8); i++)
 	{
-		if (difference & 1)
-			count++;
-		difference >>= 1;
+		result = 1 << i;  /* Shift 1 to the current bit position */
+
+		/* Check if the bit at the current position is set in the difference */
+		if (result == (difference & result))
+			count++;  /* Increment the count if the bit is set */
 	}
 
-	return (count);
+	return (count);  /* Return the count of differing bits */
 }
 
