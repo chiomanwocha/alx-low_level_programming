@@ -3,12 +3,12 @@
 #include <stdlib.h>
 
 /**
- * check97 - Checks the number of arguments.
- * @argc: Number of arguments.
+ * checkArgumentCount - checks for the correct number of arguments
+ * @argc: number of arguments
  *
- * Return: void.
+ * Return: void
  */
-void check97(int argc)
+void checkArgumentCount(int argc)
 {
 	if (argc != 3)
 	{
@@ -18,15 +18,15 @@ void check97(int argc)
 }
 
 /**
- * check98 - Checks the existence and readability of file_from.
- * @check: Check if true or false.
- * @file: File_from name.
- * @fd_from: File descriptor of file_from, or -1.
- * @fd_to: File descriptor of file_to, or -1.
+ * checkFileFrom - checks that file_from exists and can be read
+ * @check: checks if true or false
+ * @file: file_from name
+ * @fd_from: file descriptor of file_from, or -1
+ * @fd_to: file descriptor of file_to, or -1
  *
- * Return: void.
+ * Return: void
  */
-void check98(ssize_t check, char *file, int fd_from, int fd_to)
+void checkFileFrom(ssize_t check, char *file, int fd_from, int fd_to)
 {
 	if (check == -1)
 	{
@@ -40,15 +40,15 @@ void check98(ssize_t check, char *file, int fd_from, int fd_to)
 }
 
 /**
- * check99 - Checks the creation and writability of file_to.
- * @check: Check if true or false.
- * @file: File_to name.
- * @fd_from: File descriptor of file_from, or -1.
- * @fd_to: File descriptor of file_to, or -1.
+ * checkFileTo - checks that file_to was created and/or can be written to
+ * @check: checks if true or false
+ * @file: file_to name
+ * @fd_from: file descriptor of file_from, or -1
+ * @fd_to: file descriptor of file_to, or -1
  *
- * Return: void.
+ * Return: void
  */
-void check99(ssize_t check, char *file, int fd_from, int fd_to)
+void checkFileTo(ssize_t check, char *file, int fd_from, int fd_to)
 {
 	if (check == -1)
 	{
@@ -62,13 +62,13 @@ void check99(ssize_t check, char *file, int fd_from, int fd_to)
 }
 
 /**
- * check100 - Checks the proper closing of file descriptors.
- * @check: Check if true or false.
- * @fd: File descriptor.
+ * checkFileDescriptors - checks that file descriptors were closed properly
+ * @check: checks if true or false
+ * @fd: file descriptor
  *
- * Return: void.
+ * Return: void
  */
-void check100(int check, int fd)
+void checkFileDescriptors(int check, int fd)
 {
 	if (check == -1)
 	{
@@ -78,11 +78,11 @@ void check100(int check, int fd)
 }
 
 /**
- * main - Copies the content of a file to another file.
- * @argc: Number of arguments passed.
- * @argv: Array of pointers to the arguments.
+ * main - copies the content of a file to another file.
+ * @argc: number of arguments passed
+ * @argv: array of pointers to the arguments
  *
- * Return: 0 on success.
+ * Return: 0 on success
  */
 int main(int argc, char *argv[])
 {
@@ -91,21 +91,26 @@ int main(int argc, char *argv[])
 	char buffer[1024];
 	mode_t file_perm;
 
-	check97(argc);
+	checkArgumentCount(argc);
 	fd_from = open(argv[1], O_RDONLY);
-	check98((ssize_t)fd_from, argv[1], -1, -1);
+	checkFileFrom((ssize_t)fd_from, argv[1], -1, -1);
 	file_perm = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, file_perm);
-	check99((ssize_t)fd_to, argv[2], fd_from, -1);
+	checkFileTo((ssize_t)fd_to, argv[2], fd_from, -1);
 	lenr = 1024;
 	while (lenr == 1024)
 	{
 		lenr = read(fd_from, buffer, 1024);
-		check98(lenr, argv[1], fd_from, fd_to);
+		checkFileFrom(lenr, argv[1], fd_from, fd_to);
 		lenw = write(fd_to, buffer, lenr);
 		if (lenw != lenr)
 			lenw = -1;
-		check99(lenw, argv[2], fd_from, fd_to);
+		checkFileTo(lenw, argv[2], fd_from, fd_to);
 	}
 	close_to = close(fd_to);
+	close_from = close(fd_from);
+	checkFileDescriptors(close_to, fd_to);
+	checkFileDescriptors(close_from, fd_from);
+	return (0);
+}
 
